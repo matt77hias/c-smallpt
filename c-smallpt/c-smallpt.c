@@ -20,7 +20,7 @@ struct Sphere spheres[] = {
 };
 
 
-inline bool intersect(struct Ray *ray, size_t *id) {
+bool intersect(struct Ray *ray, size_t *id) {
 	bool hit = false;
 	const size_t n = sizeof(spheres) / sizeof(struct Sphere);
 	for (size_t i = 0; i < n; ++i) {
@@ -33,7 +33,7 @@ inline bool intersect(struct Ray *ray, size_t *id) {
 }
 
 
-inline bool intersectP(struct Ray *ray) {
+bool intersectP(struct Ray *ray) {
 	const size_t n = sizeof(spheres) / sizeof(struct Sphere);
 	for (size_t i = 0; i < n; ++i)
 		if (intersect_sphere(&spheres[i], ray))
