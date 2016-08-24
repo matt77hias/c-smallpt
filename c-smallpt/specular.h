@@ -5,7 +5,7 @@ inline double reflectance0(double n1, double n2) {
 	return sqrt_R0 * sqrt_R0;
 }
 
-double schlick_reflectance(double n1, double n2, double c) {
+inline double schlick_reflectance(double n1, double n2, double c) {
 	const double R0 = reflectance0(n1, n2);
 	return R0 + (1 - R0) * c * c * c * c * c;
 }
