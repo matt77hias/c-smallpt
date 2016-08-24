@@ -100,7 +100,7 @@ struct Vector3 radiance(struct Ray *ray, unsigned short xseed[3]) {
 			normalize_v3(&u);
 			const struct Vector3 v = cross_v3v3(&w, &u);
 
-			const struct Vector3 sample_d = uniform_sample_on_hemisphere(erand48(xseed), erand48(xseed));
+			const struct Vector3 sample_d = cosine_weighted_sample_on_hemisphere(erand48(xseed), erand48(xseed));
 			const struct Vector3 _x = mul_dv3(sample_d.x, &u);
 			const struct Vector3 _y = mul_dv3(sample_d.y, &v);
 			const struct Vector3 _z = mul_dv3(sample_d.z, &w);
