@@ -92,7 +92,7 @@ struct Vector3 radiance(struct Ray *ray, unsigned short xseed[3]) {
 		default: {
 			const struct Vector3 w = dot_v3v3(&n, &r->d) < 0 ? n : minus_v3(&n);
 			struct Vector3 _u = { 0.0, 0.0, 0.0 };
-			if (abs(w.x) > 0.1)
+			if (fabs(w.x) > 0.1)
 				_u.y = 1.0;
 			else
 				_u.x = 1.0;
@@ -116,7 +116,7 @@ struct Vector3 radiance(struct Ray *ray, unsigned short xseed[3]) {
 	}
 }
 
-#define OPENMP
+//#define OPENMP
 
 int main(int argc, char *argv[]) {
 	const int nb_samples = (argc == 2) ? atoi(argv[1]) / 4 : 1;
@@ -156,8 +156,8 @@ int main(int argc, char *argv[]) {
 						const struct Vector3 _b = mul_v3d(&cy, (((sy + 0.5 + dy) / 2.0 + y) / h - 0.5));
 						const struct Vector3 _ab = add_v3v3(&_a, &_b);
 						struct Vector3 d = add_v3v3(&_ab, &gaze);
-						const struct Vector3 d140 = mul_v3d(&d, 140.0);
-						struct Ray ray = { add_v3v3(&eye, &d140), *normalize_v3(&d), EPSILON_SPHERE, INFINITY, 0 };
+						const struct Vector3 d130 = mul_v3d(&d, 130.0);
+						struct Ray ray = { add_v3v3(&eye, &d130), *normalize_v3(&d), EPSILON_SPHERE, INFINITY, 0 };
 						
 						const struct Vector3 _l = radiance(&ray, xseed);
 						const struct Vector3 l = div_v3d(&_l, (double)nb_samples);
