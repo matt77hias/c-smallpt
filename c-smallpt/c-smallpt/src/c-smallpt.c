@@ -19,7 +19,6 @@ struct Sphere spheres[] = {
 	{ 600.0, { 50.0, 681.6 - .27, 81.6 },  { 12.0, 12.0, 12.0 }, { 0.0, 0.0, 0.0 },       DIFFUSE}	   //Light
 };
 
-
 inline bool intersect(struct Ray *ray, size_t *id) {
 	bool hit = false;
 	const size_t n = sizeof(spheres) / sizeof(struct Sphere);
@@ -32,7 +31,6 @@ inline bool intersect(struct Ray *ray, size_t *id) {
 	return hit;
 }
 
-
 inline bool intersectP(struct Ray *ray) {
 	const size_t n = sizeof(spheres) / sizeof(struct Sphere);
 	for (size_t i = 0; i < n; ++i)
@@ -40,7 +38,6 @@ inline bool intersectP(struct Ray *ray) {
 			return true;
 	return false;
 }
-
 
 struct Vector3 radiance(struct Ray *ray, unsigned short xseed[3]) {
 	struct Ray *r = ray;
@@ -92,7 +89,7 @@ struct Vector3 radiance(struct Ray *ray, unsigned short xseed[3]) {
 		default: {
 			const struct Vector3 w = dot_v3v3(&n, &r->d) < 0 ? n : minus_v3(&n);
 			struct Vector3 _u = { 0.0, 0.0, 0.0 };
-			if (abs(w.x) > 0.1)
+			if (fabs(w.x) > 0.1)
 				_u.y = 1.0;
 			else
 				_u.x = 1.0;
@@ -116,8 +113,6 @@ struct Vector3 radiance(struct Ray *ray, unsigned short xseed[3]) {
 	}
 }
 
-#define OPENMP
-
 int main(int argc, char *argv[]) {
 	const int nb_samples = (argc == 2) ? atoi(argv[1]) / 4 : 1;
 
@@ -135,13 +130,8 @@ int main(int argc, char *argv[]) {
 
 	struct Vector3 *Ls = malloc(w * h * sizeof(struct Vector3));
 
-#ifdef OPENMP
-#pragma omp parallel for schedule(static)
-#endif
 	for (int y = 0; y < h; ++y) { // pixel row
-#ifndef OPENMP
 		fprintf(stderr, "\rRendering (%d spp) %5.2f%%", nb_samples * 4, 100.0 * y / (h - 1));
-#endif
 		for (unsigned short x = 0, xseed[3] = { 0, 0, y*y*y }; x < w; ++x) // pixel column
 			for (int sy = 0, i = (h - 1 - y) * w + x; sy < 2; ++sy) // 2 subpixel row
 				for (int sx = 0; sx < 2; ++sx) { // 2 subpixel column
@@ -173,5 +163,3 @@ int main(int argc, char *argv[]) {
 
 	free(Ls);
 }
-
-
