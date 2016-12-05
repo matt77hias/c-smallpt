@@ -146,8 +146,8 @@ int main(int argc, char *argv[]) {
 						const struct Vector3 _b = mul_v3d(&cy, (((sy + 0.5 + dy) / 2.0 + y) / h - 0.5));
 						const struct Vector3 _ab = add_v3v3(&_a, &_b);
 						struct Vector3 d = add_v3v3(&_ab, &gaze);
-						const struct Vector3 d140 = mul_v3d(&d, 140.0);
-						struct Ray ray = { add_v3v3(&eye, &d140), *normalize_v3(&d), EPSILON_SPHERE, INFINITY, 0 };
+						const struct Vector3 d130 = mul_v3d(&d, 130.0);
+						struct Ray ray = { add_v3v3(&eye, &d130), *normalize_v3(&d), EPSILON_SPHERE, INFINITY, 0 };
 						
 						const struct Vector3 _l = radiance(&ray, xseed);
 						const struct Vector3 l = div_v3d(&_l, (double)nb_samples);
