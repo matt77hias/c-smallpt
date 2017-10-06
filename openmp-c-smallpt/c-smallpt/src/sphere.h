@@ -1,16 +1,55 @@
 #pragma once
 
-enum Reflection_t { DIFFUSE, SPECULAR, REFRACTIVE };
+//-----------------------------------------------------------------------------
+// Includes
+//-----------------------------------------------------------------------------
+#pragma region
+
+#include "geometry.h"
+
+#pragma endregion
+
+//-----------------------------------------------------------------------------
+// Declarations and Definitions: Defines
+//-----------------------------------------------------------------------------
+#pragma region
 
 #define EPSILON_SPHERE 1e-4
 
-struct Sphere {
-	double r;
-	struct Vector3 p, e, f; // position, emission, reflection
-	enum Reflection_t reflection_t;
-};
+#pragma endregion
 
-bool intersect_sphere(const struct Sphere *sphere, struct Ray *ray) {
+//-----------------------------------------------------------------------------
+// Declarations and Definitions: Reflection_t
+//-----------------------------------------------------------------------------
+#pragma region
+
+typedef enum Reflection_t { 
+	DIFFUSE, 
+	SPECULAR, 
+	REFRACTIVE 
+} Reflection_t;
+
+#pragma endregion
+
+//-----------------------------------------------------------------------------
+// Declarations and Definitions: Sphere
+//-----------------------------------------------------------------------------
+#pragma region
+
+typedef struct Sphere {
+	double r;
+	Vector3 p, e, f; // position, emission, reflection
+	Reflection_t reflection_t;
+} Sphere;
+
+#pragma endregion
+
+//-----------------------------------------------------------------------------
+// Declarations and Definitions: Sphere Utilities
+//-----------------------------------------------------------------------------
+#pragma region
+
+bool intersect_sphere(const Sphere *sphere, Ray *ray) {
 	// (o + t*d - p) . (o + t*d - p) - r*r = 0
 	// <=> (d . d) * t^2 + 2 * d . (o - p) * t + (o - p) . (o - p) - r*r = 0
 	// 
@@ -25,12 +64,13 @@ bool intersect_sphere(const struct Sphere *sphere, struct Ray *ray) {
 	// t = (- 2 * d . (o - p) +- 2 * sqrt(D)) / (2 * (d . d))
 	// <=> t = dop +- sqrt(D)
 
-	const struct Vector3 op = sub_v3v3(&sphere->p, &ray->o);
+	const Vector3 op = sub_v3v3(&sphere->p, &ray->o);
 	const double dop = dot_v3v3(&ray->d, &op);
 	const double D = dop * dop - dot_v3v3(&op, &op) + sphere->r * sphere->r;
 
-	if (D < 0)
+	if (D < 0) {
 		return false;
+	}
 
 	const double sqrtD = sqrt(D);
 
@@ -48,3 +88,5 @@ bool intersect_sphere(const struct Sphere *sphere, struct Ray *ray) {
 
 	return false;
 }
+
+#pragma endregion
