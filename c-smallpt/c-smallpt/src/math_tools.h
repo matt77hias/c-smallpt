@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------------
 #pragma region
 
+#include <math.h>
 #include <stdint.h>
 
 #pragma endregion
