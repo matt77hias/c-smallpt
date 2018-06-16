@@ -9,7 +9,7 @@ version: 1.1.{build}
 image: Visual Studio 2017
 
 configuration:
-  matrix:
+ matrix:
   - solution_name: c-smallpt.sln/c-smallpt.sln
   - solution_name: openmp-c-smallpt.sln/c-smallpt.sln
  - Release
