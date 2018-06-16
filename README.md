@@ -1,3 +1,11 @@
+[![Build status][s1]][av] [![License][s2]][li]
+
+[s1]: https://ci.appveyor.com/api/projects/status/wcr7hxuse9g7r0hc?svg=true
+[s2]: https://img.shields.io/badge/license-MIT-blue.svg
+
+[av]: https://ci.appveyor.com/project/matt77hias/c-smallpt
+[li]: https://raw.githubusercontent.com/matt77hias/c-smallpt/master/LICENSE.txt
+
 # c-smallpt
 
 ## About
