@@ -1,0 +1,27 @@
+###############################################################################
+# General Configuration
+###############################################################################
+version: 1.1.{build}
+
+###############################################################################
+# Environment Configuration
+###############################################################################
+image: Visual Studio 2017
+
+configuration:
+  matrix:
+  - solution_name: c-smallpt.sln/c-smallpt.sln
+  - solution_name: openmp-c-smallpt.sln/c-smallpt.sln
+ - Release
+ - Debug
+platform: 
+  - x64
+  - x86
+
+###############################################################################
+# Build Configuration
+###############################################################################
+build:
+  - msbuild %solution_name%
+  parallel: true
+  verbosity: normal
