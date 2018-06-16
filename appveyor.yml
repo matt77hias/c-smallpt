@@ -16,8 +16,8 @@ platform:
   - x86
 environment:
   matrix:
-  - solution_name: c-smallpt.sln/c-smallpt.sln
-  - solution_name: openmp-c-smallpt.sln/c-smallpt.sln
+  - solution_name: c-smallpt/c-smallpt.sln
+  - solution_name: openmp-c-smallpt/c-smallpt.sln
 
 ###############################################################################
 # Build Configuration
