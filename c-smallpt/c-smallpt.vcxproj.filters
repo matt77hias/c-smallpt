@@ -9,48 +9,42 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files\core">
+    <Filter Include="Header Files\src">
       <UniqueIdentifier>{c70d9418-abce-4dac-92f2-1434b7a0ca59}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\core">
+    <Filter Include="Source Files\src">
       <UniqueIdentifier>{6f839605-be4c-42b2-b20e-991f7d8015ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="c-smallpt\src\targetver.h">
-      <Filter>Header Files\core</Filter>
-    </ClInclude>
     <ClInclude Include="c-smallpt\src\vector.h">
-      <Filter>Header Files\core</Filter>
-    </ClInclude>
-    <ClInclude Include="c-smallpt\src\c-smallpt.h">
-      <Filter>Header Files\core</Filter>
+      <Filter>Header Files\src</Filter>
     </ClInclude>
     <ClInclude Include="c-smallpt\src\math_tools.h">
-      <Filter>Header Files\core</Filter>
+      <Filter>Header Files\src</Filter>
     </ClInclude>
     <ClInclude Include="c-smallpt\src\sphere.h">
-      <Filter>Header Files\core</Filter>
+      <Filter>Header Files\src</Filter>
     </ClInclude>
     <ClInclude Include="c-smallpt\src\geometry.h">
-      <Filter>Header Files\core</Filter>
+      <Filter>Header Files\src</Filter>
     </ClInclude>
     <ClInclude Include="c-smallpt\src\sampling.h">
-      <Filter>Header Files\core</Filter>
+      <Filter>Header Files\src</Filter>
     </ClInclude>
     <ClInclude Include="c-smallpt\src\specular.h">
-      <Filter>Header Files\core</Filter>
+      <Filter>Header Files\src</Filter>
     </ClInclude>
     <ClInclude Include="c-smallpt\src\imageio.h">
-      <Filter>Header Files\core</Filter>
+      <Filter>Header Files\src</Filter>
     </ClInclude>
     <ClInclude Include="c-smallpt\src\erand48.h">
-      <Filter>Header Files\core</Filter>
+      <Filter>Header Files\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="c-smallpt\src\c-smallpt.c">
-      <Filter>Source Files\core</Filter>
+      <Filter>Source Files\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -49,7 +49,7 @@ typedef struct Sphere {
 //-----------------------------------------------------------------------------
 #pragma region
 
-bool intersect_sphere(const Sphere *sphere, Ray *ray) {
+bool intersect_sphere(const Sphere* sphere, Ray* ray) {
 	// (o + t*d - p) . (o + t*d - p) - r*r = 0
 	// <=> (d . d) * t^2 + 2 * d . (o - p) * t + (o - p) . (o - p) - r*r = 0
 	// 
@@ -68,7 +68,7 @@ bool intersect_sphere(const Sphere *sphere, Ray *ray) {
 	const double dop = dot_v3v3(&ray->d, &op);
 	const double D = dop * dop - dot_v3v3(&op, &op) + sphere->r * sphere->r;
 
-	if (D < 0) {
+	if (0 > D) {
 		return false;
 	}
 

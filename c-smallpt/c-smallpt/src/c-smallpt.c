@@ -3,7 +3,10 @@
 //-----------------------------------------------------------------------------
 #pragma region
 
-#include "c-smallpt.h"
+#include "imageio.h"
+#include "sampling.h"
+#include "specular.h"
+#include "sphere.h"
 
 #pragma endregion
 
@@ -34,10 +37,10 @@ const Sphere spheres[] = {
 	{ 600.0, { 50.0, 681.6 - .27, 81.6 },  { 12.0, 12.0, 12.0 }, { 0.0, 0.0, 0.0 },       DIFFUSE}	   //Light
 };
 
-inline bool intersect(Ray *ray, size_t *id) {
+inline bool intersect(Ray* ray, size_t* id) {
 	bool hit = false;
 	const size_t n = sizeof(spheres) / sizeof(Sphere);
-	for (size_t i = 0; i < n; ++i) {
+	for (size_t i = 0u; i < n; ++i) {
 		if (intersect_sphere(&spheres[i], ray)) {
 			hit = true;
 			*id = i;
@@ -47,19 +50,8 @@ inline bool intersect(Ray *ray, size_t *id) {
 	return hit;
 }
 
-inline bool intersectP(Ray *ray) {
-	const size_t n = sizeof(spheres) / sizeof(Sphere);
-	for (size_t i = 0; i < n; ++i) {
-		if (intersect_sphere(&spheres[i], ray)) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-static Vector3 radiance(Ray *ray, unsigned short xseed[3]) {
-	Ray *r = ray;
+static Vector3 radiance(Ray* ray, unsigned short xseed[3]) {
+	Ray* r = ray;
 	Vector3 L = { 0.0, 0.0, 0.0 };
 	Vector3 F = { 1.0, 1.0, 1.0 };
 
@@ -69,7 +61,7 @@ static Vector3 radiance(Ray *ray, unsigned short xseed[3]) {
 			return L;
 		}
 
-		const Sphere *shape = &spheres[id];
+		const Sphere* shape = &spheres[id];
 		const Vector3 p = eval_r(r, r->tmax);
 		Vector3 n = sub_v3v3(&p, &shape->p);
 		normalize_v3(&n);
@@ -79,7 +71,7 @@ static Vector3 radiance(Ray *ray, unsigned short xseed[3]) {
 		F = mul_v3v3(&F, &shape->f);
 
 		// Russian roulette
-		if (r->depth > 4) {
+		if (4u < r->depth) {
 			const double continue_probability = max_v3(&shape->f);
 			if (erand48(xseed) >= continue_probability) {
 				return L;
@@ -111,7 +103,7 @@ static Vector3 radiance(Ray *ray, unsigned short xseed[3]) {
 		}
 		
 		default: {
-			const Vector3 w = dot_v3v3(&n, &r->d) < 0 ? n : minus_v3(&n);
+			const Vector3 w = (0.0 > dot_v3v3(&n, &r->d)) ? n : minus_v3(&n);
 			Vector3 _u = { 0.0, 0.0, 0.0 };
 			if (fabs(w.x) > 0.1) {
 				_u.y = 1.0;
@@ -139,11 +131,11 @@ static Vector3 radiance(Ray *ray, unsigned short xseed[3]) {
 	}
 }
 
-int main(int argc, char *argv[]) {
-	const unsigned int nb_samples = (argc == 2) ? atoi(argv[1]) / 4 : 1;
+int main(int argc, char* argv[]) {
+	const unsigned int nb_samples = (2 == argc) ? atoi(argv[1]) / 4 : 1;
 
-	const unsigned int w = 1024;
-	const unsigned int h = 768;
+	const unsigned int w = 1024u;
+	const unsigned int h = 768u;
 
 	const Vector3 eye = { 50, 52, 295.6 };
 	Vector3 gaze = { 0, -0.042612, -1 };
@@ -154,26 +146,26 @@ int main(int argc, char *argv[]) {
 	normalize_v3(&_cy);
 	const Vector3 cy = mul_v3d(&_cy, fov);
 
-	Vector3 *Ls = malloc(w * h * sizeof(Vector3));
+	Vector3* Ls = malloc(w * h * sizeof(Vector3));
 
-	for (unsigned int y = 0; y < h; ++y) { // pixel row
+	for (unsigned int y = 0u; y < h; ++y) { // pixel row
 		
 		fprintf(stderr, "\rRendering (%d spp) %5.2f%%", nb_samples * 4, 100.0 * y / (h - 1));
 		
 		unsigned short xseed[3] = { 0, 0, (unsigned short)(y * y * y) };
-		for (unsigned int x = 0; x < w; ++x) { // pixel column
+		for (unsigned int x = 0u; x < w; ++x) { // pixel column
 			
-			for (unsigned int sy = 0, i = (h - 1 - y) * w + x; sy < 2; ++sy) { // 2 subpixel row
+			for (unsigned int sy = 0u, i = (h - 1u - y) * w + x; sy < 2u; ++sy) { // 2 subpixel row
 				
-				for (unsigned int sx = 0; sx < 2; ++sx) { // 2 subpixel column
+				for (unsigned int sx = 0u; sx < 2u; ++sx) { // 2 subpixel column
 					
 					Vector3 L = { 0.0, 0.0, 0.0 };
 					
-					for (unsigned int s = 0; s < nb_samples; s++) { // samples per subpixel
+					for (unsigned int s = 0u; s < nb_samples; ++s) { // samples per subpixel
 						const double u1 = 2.0 * erand48(xseed);
 						const double u2 = 2.0 * erand48(xseed);
-						const double dx = u1 < 1 ? sqrt(u1) - 1.0 : 1.0 - sqrt(2.0 - u1);
-						const double dy = u2 < 1 ? sqrt(u2) - 1.0 : 1.0 - sqrt(2.0 - u2);
+						const double dx = (u1 < 1.0f) ? sqrt(u1) - 1.0 : 1.0 - sqrt(2.0 - u1);
+						const double dy = (u2 < 1.0f) ? sqrt(u2) - 1.0 : 1.0 - sqrt(2.0 - u2);
 
 						const Vector3 _a = mul_v3d(&cx, (((sx + 0.5 + dx) / 2.0 + x) / w - 0.5));
 						const Vector3 _b = mul_v3d(&cy, (((sy + 0.5 + dy) / 2.0 + y) / h - 0.5));
