@@ -150,7 +150,7 @@ int main(int argc, char* argv[]) {
 
 	for (unsigned int y = 0u; y < h; ++y) { // pixel row
 		
-		fprintf(stderr, "\rRendering (%d spp) %5.2f%%", nb_samples * 4, 100.0 * y / (h - 1));
+		fprintf(stderr, "\rRendering (%u spp) %5.2f%%", nb_samples * 4, 100.0 * y / (h - 1));
 		
 		unsigned short xseed[3] = { 0, 0, (unsigned short)(y * y * y) };
 		for (unsigned int x = 0u; x < w; ++x) { // pixel column
