@@ -1,4 +1,4 @@
-[![Build status][s1]][av] [![License][s2]][co] [![License][s3]][li]
+[![Build status][s1]][av] [![Code quality][s2]][co] [![License][s3]][li]
 
 [s1]: https://ci.appveyor.com/api/projects/status/wcr7hxuse9g7r0hc?svg=true
 [s2]: https://api.codacy.com/project/badge/Grade/b943cd5e883d48dcb308a23a15ea5aa5
