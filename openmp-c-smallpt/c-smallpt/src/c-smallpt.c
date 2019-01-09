@@ -187,7 +187,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
-	write_ppm(w, h, Ls, "c-smallpt.ppm");
+	write_ppm(w, h, Ls, "c-image.ppm");
 
 	free(Ls);
 }
